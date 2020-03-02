@@ -1,49 +1,49 @@
 
 const MOVIE_RIGHT = 'MOVIE-RIGHT';
 const MAKE_ACTIVE = 'MAKE_ACTIVE';
-
+const SET_FILTRATION = 'SET-FILTER';
+const CANCEL_FILTRATION = 'CANCEL-FILTRATION';
 
 export const moveRight = (pos) =>({type:MOVIE_RIGHT, pos:pos, direction: 1});
 export const moveLeft = (pos) =>({type:MOVIE_RIGHT, pos:pos, direction: -1});
 export const makeActive = (id) =>({type:MAKE_ACTIVE, id:id});
-
+export const setFiltration = (id, value) => ({type:SET_FILTRATION , id:id, value:value});
+export const cancelFiltration = () => ({type: CANCEL_FILTRATION,});
 
 let initialState = {
+
+    filtration:{id: 0, value: ''} ,
+
     tableHead: [
         {
             name:"Имя",
             id: 1,
             activity: false,
             visibility: true,
-            filter: "text"
         },
         {
             name:"Фамилия",
             id:2,
             activity: false,
             visibility: true,
-            filter: "text"
         },
         {
             name:"Вид спорта",
             id:3,
             activity: false,
             visibility: true,
-            filter: "checkbox"
         },
         {
             name:"Возраст",
             id:4,
             activity: false,
             visibility: true,
-            filter: "range"
         },
         {
             name:"Золотые медали",
             id:5,
             activity: false,
             visibility: true,
-            filter: "number"
         }
         ],
 };
@@ -79,6 +79,13 @@ export const SettingReducer = (state = initialState, action) => {
                 })
             }
         }
+        case SET_FILTRATION: {
+            return {...state, filtration:{id: action.id , value: action.value}}
+        }
+        case CANCEL_FILTRATION: {
+            return {...state, filtration:{id: 0, value: ''} }
+        }
+
         default: {
             return {...state}
         }

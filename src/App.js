@@ -1,10 +1,10 @@
 import React from 'react';
-import Table from "./Table/Table.jsx";
+import Table from "./Table/Components/Table.jsx";
 
 import './App.css';
 import {connect} from "react-redux";
-import {makeActive, moveLeft, moveRight} from "./Redux/SettingReducer";
-import {deleteItem, duplicateItem, sortByAge} from "./Redux/DataReducer";
+import {cancelFiltration, makeActive, moveLeft, moveRight, setFiltration} from "./Redux/SettingReducer";
+import {deleteItem, duplicateItem, sortByProperty} from "./Redux/DataReducer";
 
 const App = (props) => {
 
@@ -19,9 +19,12 @@ const App = (props) => {
             moveLeft={props.moveLeft}
             makeActive={props.makeActive}
             data={props.data}
-            sortByAge={props.sortByAge}
+            sortByProperty={props.sortByProperty}
             deleteItem={props.deleteItem}
             duplicateItem={props.duplicateItem}
+            filtration={props.settings.filtration}
+            setFiltration={props.setFiltration}
+            cancelFiltration={props.cancelFiltration}
         />
     </div>
   );
@@ -32,9 +35,19 @@ const App = (props) => {
 let mapStateToProps = (state) => {
     return {
         data:state.data,
-        //theme: state.settings.theme,
         settings: state.settings,
     }
 };
 
-export default connect( mapStateToProps, {moveRight, moveLeft, makeActive, sortByAge, deleteItem, duplicateItem})(App);
+export default connect( mapStateToProps,
+    {
+        moveRight,
+        moveLeft,
+        makeActive,
+        sortByProperty,
+        deleteItem,
+        duplicateItem,
+        setFiltration,
+        cancelFiltration
+    }
+        )(App);

@@ -2,11 +2,12 @@
 const SORT = 'SORT';
 const DELETE_ITEM = 'DELETE-ITEM';
 const DUPLICATE_ITEM = "DUPLICATE-ITEM";
+const CHANGE_PROPERTY = 'CHANGE-PROPERTY';
 
-export const sortByAge = (id) => ({type:SORT, id:id});
+export const sortByProperty = (id) => ({type:SORT, id:id});
 export const deleteItem = (id) => ({type: DELETE_ITEM, id: id});
 export const duplicateItem = (id) => ({type: DUPLICATE_ITEM, id: id});
-
+export const changeProperty = (id, propertyId, value) => ({type:CHANGE_PROPERTY, id:id, propertyId: propertyId, newValue:value});
 let initialState = [
 
     {
@@ -58,10 +59,12 @@ let initialState = [
 
 // helpers
 
-// const SortBy = (data, id) => {
-//     return data.sort((prev,next) => {prev.age - next.age})
-// };
+const Filter = (state = initialState, propertyId, value) => {
 
+    return state.filter(item => {
+        item.property[propertyId] = value
+    });
+};
 
 export const DataReducer = (state = initialState, action) => {
 
@@ -95,6 +98,19 @@ export const DataReducer = (state = initialState, action) => {
             );
             console.log(state);
             return [...state]
+        }
+        case CHANGE_PROPERTY: {
+            console.log(action);
+            return (state.map((item) => {
+                let newItem = {...item};
+                if (item.id === action.id) {
+                    newItem = {
+                        ...item,
+                        ...item.properties[action.propertyId] = action.newValue
+                    }
+                }
+                return newItem;
+            }))
         }
         default: {
             return [...state]

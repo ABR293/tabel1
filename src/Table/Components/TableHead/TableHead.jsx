@@ -1,6 +1,8 @@
 import React from 'react';
 import style from './TableHead.module.css';
 import 'font-awesome/css/font-awesome.min.css';
+import Filter from "./Filter";
+import Table from "../../../App";
 
 const Item = (props) =>{
     console.log(props);
@@ -15,7 +17,7 @@ const Item = (props) =>{
                 <button
                     onClick={() => {
                         props.makeActive(props.id);
-                        props.sortByAge(props.id)}}
+                        props.sortByProperty(props.id)}}
                 >
                     {props.name}
                     {props.activity && <i className="fa fa-chevron-down" aria-hidden="true"> </i>}
@@ -26,9 +28,13 @@ const Item = (props) =>{
                     disabled={props.pos === 4}
                 ><i className="fa fa-chevron-right" aria-hidden="true"> </i></button>
             </div>
-            <div>
-                <input type={props.filter}/>
-            </div>
+            <Filter
+                filtration={props.filtration}
+                id={props.id}
+                setFiltration={props.setFiltration}
+                cancelFiltration={props.cancelFiltration}
+
+            />
         </div>
     )
 };
@@ -47,8 +53,10 @@ const TableHead = (props) => {
             moveRight={props.moveRight}
             moveLeft={props.moveLeft}
             makeActive={props.makeActive}
-            sortByAge={props.sortByAge}
-            filter={item.filter}
+            sortByProperty={props.sortByProperty}
+            filtration={props.filtration}
+            setFiltration={props.setFiltration}
+            cancelFiltration={props.cancelFiltration}
         />);
 
     return(

@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
-import TableHead from './TableHead';
-import Exz from "../exz";
+import TableHead from './TableHead/TableHead';
+import Exz from "../../exz";
 import style from "./Table.module.css"
 import {ContextMenuTrigger} from "react-contextmenu";
 import Modal from "./Common/Modal";
-import RedactWindow from "./RedactWindow";
+import RedactWindow from "../Components/RedactWindow/RedactWindow";
 import * as ReactDOM from "react-dom";
 
 
@@ -12,16 +12,14 @@ const Item = (props) => {
 
     console.log(props);
 
-    let Properties = props.tableHead.map(item => {
-        return (<div className={style.item} key={item.id}> {props.properties[props.tableHead.indexOf(item)]}</div>)
-    });
+     let Properties = props.tableHead.map(item => {
+         return (<div className={style.item} key={item.id}> {props.properties[item.id-1]}</div>)
+     });
 
     let [isRedactWindowOpen, setRedactWindowOpen] = useState(false);
     let toggleRedactWindow = () => {
         setRedactWindowOpen(!isRedactWindowOpen)
     };
-
-
 
     return (
         <>
@@ -32,6 +30,7 @@ const Item = (props) => {
                         id={props.id}
                         properties={props.properties}
                         tableHead={props.tableHead}
+                        changeProperty={props.changeProperty}
                     />
                 </Modal>,
                 document.body
@@ -54,9 +53,14 @@ const Item = (props) => {
 };
 
 const Table = (props) => {
-    console.log(props);
 
-    let Data = props.data.map(item => {
+    let ItemData = props.data;
+
+    if (props.filtration.id !== 0){
+        console.log('Filter')
+    }
+
+    let Data = ItemData.map(item => {
 
         if (item){
         return (
@@ -66,25 +70,24 @@ const Table = (props) => {
                 properties={item.properties}
                 deleteItem={props.deleteItem}
                 duplicateItem={props.duplicateItem}
+                changeProperty={props.changeProperty}
                 tableHead={props.tableHead}
-                Setting ={props.tableHead.map()}
-
-
             />
         )}
     });
 
     return (
         <>
-
-
             <div>
                 <TableHead
                     tableHead={props.tableHead}
                     moveRight={props.moveRight}
                     moveLeft={props.moveLeft}
                     makeActive={props.makeActive}
-                    sortByAge={props.sortByAge}
+                    sortByProperty={props.sortByProperty}
+                    filtration={props.filtration}
+                    setFiltration={props.setFiltration}
+                    cancelFiltration={props.cancelFiltration}
                 />
                 {Data}
             </div>

@@ -1,0 +1,19 @@
+.block {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  margin: 5px 10% 5px 10%;
+  height: 30px;
+  border: solid black 1px; }
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 300px;
+  height: 20px;
+  border: solid black 0.5px;
+  margin: 5px; }
+
+/*# sourceMappingURL=Table.module.css.map */

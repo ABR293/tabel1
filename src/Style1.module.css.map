@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,KAAK;EACH,KAAK,EAAE,OAAO;EACd,gBAAgB,EAAE,OAAO;EACzB,OAAO,EAAE,GAAG;EACZ,aAAa,EAAE,GAAG;EAClB,KAAK,EAAE,KAAK;;AAEd,UAAU;EACR,YAAY,EAAE,OAAO;EACrB,gBAAgB,EAAE,OAAO;EACzB,KAAK,EAAE,KAAK;EACZ,aAAa,EAAE,GAAG;EAClB,OAAO,EAAE,IAAI",
+"sources": ["Style1.module.sass"],
+"names": [],
+"file": "Style1.module.css"
+}
