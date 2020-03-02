@@ -6,9 +6,12 @@ const Filter = (props) => {
 
     console.log(props);
 
+    let FilterInput = React.createRef();
     let value = '';
-    let onValueChange = (element) => {
-        return (value = element.currentTarget.value)
+
+    let onValueChange = () => {
+        value = FilterInput.current.value;
+        console.log(value);
     };
 
     console.log(value);
@@ -18,18 +21,19 @@ const Filter = (props) => {
             <input
                 type="text"
                 onChange={onValueChange}
+                ref={FilterInput}
             />
             {props.filtration.id !== props.id
                 ?
                 <button
-                    disabled={(value === '')}
-                    onClick={() => props.setFiltration(props.id, value)}
+                    //disabled={(value === '')}
+                    onClick={() => {props.setFiltration(props.id, value);}}
                 >
                     <i className="fa fa-search" aria-hidden="true"> </i>
                 </button>
                 :
                 <button
-                    onClick={() => props.cancelFiltration()}
+                    onClick={() => {props.cancelFiltration(); FilterInput.current.value = '' }}
                 >
                     <i className="fa fa-times" aria-hidden="true"> </i>
                 </button>

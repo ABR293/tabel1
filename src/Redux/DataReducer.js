@@ -12,59 +12,53 @@ let initialState = [
 
     {
         id: 645,
-        properties:["Andrew","Ronaldinio","Football",28,1]
+        properties:["Andrew","Ronaldinio","Football","28","1"]
     },
 
     {
         id: 234,
-        properties:["Fedor", "Emelianenko", "MixFight", 23,2],
+        properties:["Fedor", "Emelianenko", "MixFight", "23","2"],
     },
     {
         id: 678,
-        properties:["Mike", "Taison", "Boxing", 19, 3],
+        properties:["Mike", "Taison", "Boxing", "19", "3"],
     },
     {
         id: 123,
-        properties:["Evgeni","Petrov","Football",24,2]
+        properties:["Evgeni","Petrov","Football","24","2"]
     },
     {
         id: 786,
-        properties:["Vladimir","Kukuev","Football",25,4]
+        properties:["Vladimir","Kukuev","Football","25","4"]
     },
     {
         id: 657,
-        properties:["Andrew","Ivanov","Boxing",29,5]
+        properties:["Andrew","Ivanov","Boxing","29","5"]
     },
     {
         id: 647,
-        properties:["Peter","Ivanov","Boxing",27,4]
+        properties:["Peter","Ivanov","Boxing","27","4"]
     },
     {
         id: 787,
-        properties:["Vladimir","Petrov","Swimming",29,2]
+        properties:["Vladimir","Petrov","Swimming","29","2"]
     },
     {
         id: 457,
-        properties:["Andrew","Sokolov","Swimming",21,6]
+        properties:["Andrew","Sokolov","Swimming","21","6"]
     },
     {
         id: 697,
-        properties:["Evgeniy","Orlov","Biatlon",25,7]
+        properties:["Evgeniy","Orlov","Biatlon","25","7"]
     },
     {
         id: 651,
-        properties:["Andrew","Ivanov","Biatlon",31,3]
+        properties:["Andrew","Ivanov","Biatlon","31","3"]
     },
 ];
 
 // helpers
 
-const Filter = (state = initialState, propertyId, value) => {
-
-    return state.filter(item => {
-        item.property[propertyId] = value
-    });
-};
 
 export const DataReducer = (state = initialState, action) => {
 
@@ -80,11 +74,11 @@ export const DataReducer = (state = initialState, action) => {
             ]
         }
         case DELETE_ITEM:{
-            return[
-                ...state.map(item => {
-                    if(item && item.id !== action.id){return item}
-                })
-            ]
+
+            let  newState = state.map(item => {
+                if(item && item.id !== action.id){return item}
+            });
+            return[...newState]
         }
         case DUPLICATE_ITEM: {
 
@@ -100,8 +94,9 @@ export const DataReducer = (state = initialState, action) => {
             return [...state]
         }
         case CHANGE_PROPERTY: {
-            console.log(action);
+
             return (state.map((item) => {
+                if(item){
                 let newItem = {...item};
                 if (item.id === action.id) {
                     newItem = {
@@ -110,7 +105,7 @@ export const DataReducer = (state = initialState, action) => {
                     }
                 }
                 return newItem;
-            }))
+            }}))
         }
         default: {
             return [...state]

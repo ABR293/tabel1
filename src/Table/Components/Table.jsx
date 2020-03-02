@@ -57,7 +57,9 @@ const Table = (props) => {
     let ItemData = props.data;
 
     if (props.filtration.id !== 0){
-        console.log('Filter')
+        ItemData = ItemData.filter(item => {return (
+            item.properties[props.filtration.id - 1] === props.filtration.value)
+        })
     }
 
     let Data = ItemData.map(item => {
