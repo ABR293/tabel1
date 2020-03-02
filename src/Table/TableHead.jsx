@@ -1,34 +1,38 @@
 import React from 'react';
 import style from './TableHead.module.css';
+import 'font-awesome/css/font-awesome.min.css';
 
 const Item = (props) =>{
     console.log(props);
     return(
-        <>
+        <div className={style.item}>
             <div className={style.block}>
                 <button
                     onClick={()=>{props.moveLeft(props.pos)}}
                     disabled={props.pos === 0}
-                >L</button>
+                ><i className="fa fa-chevron-left" aria-hidden="true"> </i></button>
 
                 <button
-                    onClick={() => {props.makeActive(props.id)}}
-                    disabled={props.activity}
-                >{props.name}</button>
+                    onClick={() => {
+                        props.makeActive(props.id);
+                        props.sortByAge(props.id)}}
+                >
+                    {props.name}
+                    {props.activity && <i className="fa fa-chevron-down" aria-hidden="true"> </i>}
+                </button>
 
                 <button
                     onClick={()=>{props.moveRight(props.pos)}}
-                    disabled={props.pos === 3}
-                >R</button>
+                    disabled={props.pos === 4}
+                ><i className="fa fa-chevron-right" aria-hidden="true"> </i></button>
             </div>
             <div>
-                {/*Filter*/}
+                <input type={props.filter}/>
             </div>
-        </>
+        </div>
     )
 };
 
-//let tableHead1 = ["Имя","Спорт","Возраст","Золотые медали"];
 
 
 const TableHead = (props) => {
@@ -43,6 +47,8 @@ const TableHead = (props) => {
             moveRight={props.moveRight}
             moveLeft={props.moveLeft}
             makeActive={props.makeActive}
+            sortByAge={props.sortByAge}
+            filter={item.filter}
         />);
 
     return(

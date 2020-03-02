@@ -10,10 +10,41 @@ export const makeActive = (id) =>({type:MAKE_ACTIVE, id:id});
 
 let initialState = {
     tableHead: [
-        {name:"Имя", id:1, activity: false},
-        {name:"Спорт", id:2, activity: false},
-        {name:"Возраст", id:3, activity: false},
-        {name:"Золотые медали", id:4, activity: false}
+        {
+            name:"Имя",
+            id: 1,
+            activity: false,
+            visibility: true,
+            filter: "text"
+        },
+        {
+            name:"Фамилия",
+            id:2,
+            activity: false,
+            visibility: true,
+            filter: "text"
+        },
+        {
+            name:"Вид спорта",
+            id:3,
+            activity: false,
+            visibility: true,
+            filter: "checkbox"
+        },
+        {
+            name:"Возраст",
+            id:4,
+            activity: false,
+            visibility: true,
+            filter: "range"
+        },
+        {
+            name:"Золотые медали",
+            id:5,
+            activity: false,
+            visibility: true,
+            filter: "number"
+        }
         ],
 };
 
