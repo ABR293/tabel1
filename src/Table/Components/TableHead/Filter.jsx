@@ -1,22 +1,18 @@
-import React from 'react';
+import React, {useState} from 'react';
 import 'font-awesome/css/font-awesome.min.css';
 import style from "./Filter.module.css"
 
 const Filter = (props) => {
 
-    console.log(props);
+    const [value, setValue] = useState('');
 
     let FilterInput = React.createRef();
-    let value = '';
 
     let onValueChange = () => {
-        value = FilterInput.current.value;
-        console.log(value);
+        setValue(FilterInput.current.value);
     };
 
-    console.log(value);
-
-    return(
+    return (
         <div className={style.block}>
             <input
                 type="text"
@@ -26,17 +22,40 @@ const Filter = (props) => {
             {props.filtration.id !== props.id
                 ?
                 <button
-                    //disabled={(value === '')}
-                    onClick={() => {props.setFiltration(props.id, value);}}
+                    disabled={(value === '')}
+                    onClick={() => {
+                        props.setFiltration(props.id, value);
+                        setValue('')
+                    }}
                 >
                     <i className="fa fa-search" aria-hidden="true"> </i>
                 </button>
                 :
-                <button
-                    onClick={() => {props.cancelFiltration(); FilterInput.current.value = '' }}
-                >
-                    <i className="fa fa-times" aria-hidden="true"> </i>
-                </button>
+                <>
+                    {
+                        value === ''
+                            ?
+                            <button
+                                onClick={() => {
+                                    props.cancelFiltration();
+                                    FilterInput.current.value = '';
+                                }}
+                            >
+                                <i className="fa fa-times" aria-hidden="true"> </i>
+                            </button>
+                            :
+                            <button
+                                disabled={(value === '')}
+                                onClick={() => {
+                                    props.setFiltration(props.id, value);
+                                    setValue('')
+                                }}
+                            >
+                                <i className="fa fa-search" aria-hidden="true"> </i>
+                            </button>
+                    }
+                </>
+
             }
         </div>
     )

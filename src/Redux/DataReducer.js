@@ -67,18 +67,28 @@ export const DataReducer = (state = initialState, action) => {
         case SORT: {
 
             return [
-                ...state.sort((prev,next) => {
-                    if ( prev.properties[action.id-1] < next.properties[action.id-1] ) return -1;
-                    if ( prev.properties[action.id-1] < next.properties[action.id-1] ) return 1;
+                ...state.sort((prev, next) => {
+                    if (prev.properties[action.id - 1] < next.properties[action.id - 1]) {
+                        return -1
+                    }
+                    if (prev.properties[action.id - 1] < next.properties[action.id - 1]) {
+                        return 1
+                    } else {
+                       // return 0
+                    }
                 })
             ]
         }
-        case DELETE_ITEM:{
+        case DELETE_ITEM: {
 
-            let  newState = state.map(item => {
-                if(item && item.id !== action.id){return item}
+            let newState = state.map(item => {
+                if (item && item.id !== action.id) {
+                    return item
+                } else {
+                    return null
+                }
             });
-            return[...newState]
+            return [...newState]
         }
         case DUPLICATE_ITEM: {
 
@@ -96,16 +106,21 @@ export const DataReducer = (state = initialState, action) => {
         case CHANGE_PROPERTY: {
 
             return (state.map((item) => {
-                if(item){
-                let newItem = {...item};
-                if (item.id === action.id) {
-                    newItem = {
-                        ...item,
-                        ...item.properties[action.propertyId] = action.newValue
+                if (item) {
+                    let newItem = {...item};
+                    if (item.id === action.id) {
+                        newItem = {
+                            ...item,
+                            ...item.properties[action.propertyId] = action.newValue
+                        }
+                    } else {
+                        return null
                     }
+                    return newItem;
+                } else {
+                    return null
                 }
-                return newItem;
-            }}))
+            }))
         }
         default: {
             return [...state]

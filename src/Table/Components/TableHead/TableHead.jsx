@@ -2,10 +2,12 @@ import React from 'react';
 import style from './TableHead.module.css';
 import 'font-awesome/css/font-awesome.min.css';
 import Filter from "./Filter";
-import Table from "../../../App";
+import {ContextMenuTrigger} from "react-contextmenu";
+import TableHeadContextMenu from "./TableHeadContextMenu";
+
 
 const Item = (props) =>{
-    console.log(props);
+
     return(
         <div className={style.item}>
             <div className={style.block}>
@@ -13,6 +15,11 @@ const Item = (props) =>{
                     onClick={()=>{props.moveLeft(props.pos)}}
                     disabled={props.pos === 0}
                 ><i className="fa fa-chevron-left" aria-hidden="true"> </i></button>
+
+                <button
+                    onClick={() => props.makeInvisible(props.id)}
+                >
+                    <i className="fa fa-eye-slash" aria-hidden="true"> </i></button>
 
                 <button
                     onClick={() => {
@@ -40,29 +47,48 @@ const Item = (props) =>{
 };
 
 
-
 const TableHead = (props) => {
 
-    let tableHead = props.tableHead.map(item =>
-        <Item
-            name={item.name}
-            pos={props.tableHead.indexOf(item)}
-            key={item.id}
-            id={item.id}
-            activity={item.activity}
-            moveRight={props.moveRight}
-            moveLeft={props.moveLeft}
-            makeActive={props.makeActive}
-            sortByProperty={props.sortByProperty}
-            filtration={props.filtration}
-            setFiltration={props.setFiltration}
-            cancelFiltration={props.cancelFiltration}
-        />);
+    let MenuID = "MenuID";
 
-    return(
-        <div className={style.header}>
-            {tableHead}
-        </div>
+    let tableHead = props.tableHead.map(item => {
+        if (item.visibility) {
+            return (
+                <Item
+                    name={item.name}
+                    pos={props.tableHead.indexOf(item)}
+                    key={item.id}
+                    id={item.id}
+                    activity={item.activity}
+                    moveRight={props.moveRight}
+                    moveLeft={props.moveLeft}
+                    makeActive={props.makeActive}
+                    sortByProperty={props.sortByProperty}
+                    filtration={props.filtration}
+                    setFiltration={props.setFiltration}
+                    cancelFiltration={props.cancelFiltration}
+                    makeVisible={props.makeVisible}
+                    makeInvisible={props.makeInvisible}
+                />
+            )
+        } else {
+        }
+    });
+
+    return (
+        <>
+            <ContextMenuTrigger id={MenuID} holdToDisplay={1000}>
+                <div className={style.header}>
+                    {tableHead}
+                </div>
+            </ContextMenuTrigger>
+            <TableHeadContextMenu
+                id={MenuID}
+                tableHead={props.tableHead}
+                makeVisible={props.makeVisible}
+                makeInvisible={props.makeInvisible}
+            />
+        </>
     )
 };
 

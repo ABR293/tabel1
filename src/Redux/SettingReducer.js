@@ -1,14 +1,19 @@
 
-const MOVIE_RIGHT = 'MOVIE-RIGHT';
-const MAKE_ACTIVE = 'MAKE_ACTIVE';
-const SET_FILTRATION = 'SET-FILTER';
-const CANCEL_FILTRATION = 'CANCEL-FILTRATION';
+const MOVIE_RIGHT = 'SettingReducer/MOVIE-RIGHT';
+const MAKE_ACTIVE = 'SettingReducer/MAKE_ACTIVE';
+const SET_FILTRATION = 'SettingReducer/SET-FILTER';
+const CANCEL_FILTRATION = 'SettingReducer/CANCEL-FILTRATION';
+const MAKE_INVISIBLE = 'SettingReducer/MAKE-INVISIBLE';
+const MAKE_VISIBLE = 'SettingReducer/MAKE-VISIBLE';
+
 
 export const moveRight = (pos) =>({type:MOVIE_RIGHT, pos:pos, direction: 1});
 export const moveLeft = (pos) =>({type:MOVIE_RIGHT, pos:pos, direction: -1});
 export const makeActive = (id) =>({type:MAKE_ACTIVE, id:id});
 export const setFiltration = (id, value) => ({type:SET_FILTRATION , id:id, value:value});
 export const cancelFiltration = () => ({type: CANCEL_FILTRATION,});
+export const makeInvisible = (id) => ({type: MAKE_INVISIBLE, id:id});
+export const makeVisible = (id) => ({type: MAKE_VISIBLE, id:id});
 
 let initialState = {
 
@@ -40,7 +45,7 @@ let initialState = {
             visibility: true,
         },
         {
-            name:"Золотые медали",
+            name:"Медали",
             id:5,
             activity: false,
             visibility: true,
@@ -55,7 +60,16 @@ let move = (date, i, direction) => {
     return date;
 };
 
+const changeVisibility = (state, id, value) => {
+    return {...state, tableHead: state.tableHead.map(item => {
+            if (item.id === id) {
+                return {...item, visibility: value}
+            } else {
+                return {...item}
+            }
 
+        })}
+}
 
 
 export const SettingReducer = (state = initialState, action) => {
@@ -65,6 +79,12 @@ export const SettingReducer = (state = initialState, action) => {
         case MOVIE_RIGHT: {
 
             return {...state, tableHead: move(state.tableHead, action.pos, action.direction)}
+        }
+        case MAKE_INVISIBLE:{
+            return changeVisibility(state, action.id, false)
+        }
+        case MAKE_VISIBLE:{
+            return changeVisibility(state, action.id, true)
         }
         case MAKE_ACTIVE: {
 

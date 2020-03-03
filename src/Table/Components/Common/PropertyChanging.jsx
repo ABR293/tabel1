@@ -3,8 +3,6 @@ import {PropertyChangingHOC} from "./PropertyChangingHOC";
 
 const PropertyChangingInput = (props) => {
 
-    console.log(props);
-
     let value;
     let onValueChange = (element) => {
         return (value = element.currentTarget.value)
