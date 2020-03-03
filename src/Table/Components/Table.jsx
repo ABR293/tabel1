@@ -27,7 +27,9 @@ const Table = (props) => {
                 duplicateItem={props.duplicateItem}
                 changeProperty={props.changeProperty}
                 tableHead={props.tableHead}
-                //renderSetting={props.tableHead.map(item => {return(item.id-1)})}
+                activity={item.activity}
+                makeItemActive={props.makeItemActive}
+                cancelItemActive={props.cancelItemActive}
             />
         )}
         else{}
@@ -38,6 +40,7 @@ const Table = (props) => {
             <div>
                 <TableHead
                     tableHead={props.tableHead}
+                    tableHeadInvisible={props.tableHeadInvisible}
                     moveRight={props.moveRight}
                     moveLeft={props.moveLeft}
                     makeActive={props.makeActive}
