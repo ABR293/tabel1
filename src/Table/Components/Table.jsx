@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import TableHead from './TableHead/TableHead';
 import Item from "../TableItem";
 
@@ -13,8 +13,9 @@ const Table = (props) => {
     if (props.filtration.id !== 0){
         ItemData = ItemData.filter(item => {return (
             item.properties[props.filtration.id - 1] === props.filtration.value)
-        })
+        });
     }
+
     let Data = ItemData.map(item => {
         if (item){
             console.log(item);

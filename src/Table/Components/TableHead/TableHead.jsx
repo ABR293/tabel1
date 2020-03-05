@@ -5,7 +5,6 @@ import Filter from "./Filter";
 import {ContextMenuTrigger} from "react-contextmenu";
 import TableHeadContextMenu from "./TableHeadContextMenu";
 
-
 const Item = (props) =>{
 
     return(
@@ -32,7 +31,7 @@ const Item = (props) =>{
 
                 <button
                     onClick={()=>{props.moveRight(props.pos)}}
-                    disabled={props.pos === 4}
+                    disabled={props.pos === props.tableHeadLength-1}
                 ><i className="fa fa-chevron-right" aria-hidden="true"> </i></button>
             </div>
             <Filter
@@ -40,7 +39,6 @@ const Item = (props) =>{
                 id={props.id}
                 setFiltration={props.setFiltration}
                 cancelFiltration={props.cancelFiltration}
-
             />
         </div>
     )
@@ -50,15 +48,15 @@ const Item = (props) =>{
 const TableHead = (props) => {
 
     let MenuID = "MenuID";
-
+    let tableHeadLength = props.tableHead.length;
     let tableHead = props.tableHead.map(item => {
-        if (item.visibility) {
             return (
                 <Item
                     name={item.name}
                     pos={props.tableHead.indexOf(item)}
                     key={item.id}
                     id={item.id}
+                    tableHeadLength={tableHeadLength}
                     activity={item.activity}
                     moveRight={props.moveRight}
                     moveLeft={props.moveLeft}
@@ -71,8 +69,6 @@ const TableHead = (props) => {
                     makeInvisible={props.makeInvisible}
                 />
             )
-        } else {
-        }
     });
 
     return (
@@ -85,6 +81,7 @@ const TableHead = (props) => {
             <TableHeadContextMenu
                 id={MenuID}
                 tableHead={props.tableHead}
+                tableHeadInvisible={props.tableHeadInvisible}
                 makeVisible={props.makeVisible}
                 makeInvisible={props.makeInvisible}
             />

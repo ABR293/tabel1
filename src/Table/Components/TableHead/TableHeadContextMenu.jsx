@@ -6,28 +6,39 @@ import style from "../../../Style1.module.css";
 export default class TableHeadMenu extends React.Component {
     render () {
 
-        let MenuBody = this.props.tableHead.map( item => {
+        let VisibleItems = this.props.tableHead.map( item => {
 
            return(
                <MenuItem
                    className={style.item}
-                   onClick={()=> {item.visibility ? this.props.makeInvisible(item.id) : this.props.makeVisible(item.id)}}
+                   onClick={()=> { this.props.makeInvisible(item.id)}}
                >
                    {item.name}
-                   {item.visibility
-                       ? <i className="fa fa-eye-slash" aria-hidden="true"> </i>
-                       : <i className="fa fa-eye" aria-hidden="true"> </i>
-                   }</MenuItem>
+                   <i className="fa fa-eye-slash" aria-hidden="true"> </i>
+                   </MenuItem>
            )
         });
 
+        let InvisibleItems = this.props.tableHeadInvisible.map( item => {
+            debugger;
+            return(
+                <MenuItem
+                    className={style.item}
+                    onClick={()=> { this.props.makeVisible(item.id)}}
+                >
+                    {item.name}
+                    <i className="fa fa-eye" aria-hidden="true"> </i>
+                    </MenuItem>
+            )
+        });
 
         return (
             <div>
                 <ContextMenu id={this.props.id+''}
                              className={style.menuBlock}
                     >
-                    {MenuBody}
+                    {VisibleItems}
+                    {InvisibleItems}
                 </ContextMenu>
             </div>
         );

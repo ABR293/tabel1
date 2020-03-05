@@ -12,8 +12,9 @@ import {
     setFiltration
 } from "./Redux/SettingReducer";
 import {
+    cancelItemActive,
     deleteItem,
-    duplicateItem,
+    duplicateItem, makeItemActive,
     sortByProperty
 } from "./Redux/DataReducer";
 
@@ -24,6 +25,7 @@ const App = (props) => {
         <div className="App">
             <Table
                 tableHead={props.settings.tableHead}
+                tableHeadInvisible={props.settings.tableHeadInvisible}
                 moveRight={props.moveRight}
                 moveLeft={props.moveLeft}
                 makeActive={props.makeActive}
@@ -36,7 +38,8 @@ const App = (props) => {
                 cancelFiltration={props.cancelFiltration}
                 makeVisible={props.makeVisible}
                 makeInvisible={props.makeInvisible}
-
+                cancelItemActive={props.cancelItemActive}
+                makeItemActive={props.makeItemActive}
             />
         </div>
     );
@@ -62,5 +65,7 @@ export default connect(mapStateToProps,
         cancelFiltration,
         makeVisible,
         makeInvisible,
+        makeItemActive,
+        cancelItemActive,
     }
 )(App);

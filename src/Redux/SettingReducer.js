@@ -51,6 +51,9 @@ let initialState = {
             visibility: true,
         }
         ],
+    tableHeadInvisible:[
+
+    ]
 };
 
 let move = (date, i, direction) => {
@@ -59,18 +62,6 @@ let move = (date, i, direction) => {
     date[i] = n;
     return date;
 };
-
-const changeVisibility = (state, id, value) => {
-    return {...state, tableHead: state.tableHead.map(item => {
-            if (item.id === id) {
-                return {...item, visibility: value}
-            } else {
-                return {...item}
-            }
-
-        })}
-}
-
 
 export const SettingReducer = (state = initialState, action) => {
 
@@ -81,10 +72,20 @@ export const SettingReducer = (state = initialState, action) => {
             return {...state, tableHead: move(state.tableHead, action.pos, action.direction)}
         }
         case MAKE_INVISIBLE:{
-            return changeVisibility(state, action.id, false)
+            let tableHead = state.tableHead.filter(item => item.id !== action.id);
+            state.tableHeadInvisible.push(
+                ...state.tableHead.filter(item => item.id === action.id));
+            return {...state, tableHead: tableHead}
         }
         case MAKE_VISIBLE:{
-            return changeVisibility(state, action.id, true)
+            let newTableHeadInvisible = state.tableHeadInvisible.filter(item => item.id !== action.id);
+            state.tableHead.push(
+                ...state.tableHeadInvisible.filter(item => item.id === action.id));
+            state.tableHead.sort((prev,next) => {
+                if (prev.id > next.id){return -1}
+                else{return 1}
+            });
+            return {...state, tableHeadInvisible: newTableHeadInvisible}
         }
         case MAKE_ACTIVE: {
 

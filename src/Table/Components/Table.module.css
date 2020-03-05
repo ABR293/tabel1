@@ -6,6 +6,9 @@
   margin: 5px 10% 5px 10%;
   height: 30px;
   border: solid black 1px; }
+  .block__active {
+    background-color: #282c34;
+    color: #fffbf0; }
 
 .item {
   display: flex;

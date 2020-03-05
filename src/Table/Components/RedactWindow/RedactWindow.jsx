@@ -4,16 +4,20 @@ import PropertyChangingInput from "../Common/PropertyChanging";
 
 const RedactWindow = (props) => {
 
-    let Body = props.tableHead.map(property => {
+    let Body = props.tableHead.sort((prev, next) => {
+        if (prev.id < next.id) {
+            return -1
+        } else {
+            return 1
+        }
 
-        console.log(props);
-
+    }).map(property => {
+        debugger;
         return (
             <div className={style.item} key={property.id}>
                 <p>{property.name + ":"}</p>
                 <PropertyChangingInput
-                    type={property.filter}
-                    value={props.properties[props.tableHead.indexOf(property)]}
+                    value={props.properties[property.id -1]}
                     itemId={props.id}
                     propertyId={property.id-1}
                 />

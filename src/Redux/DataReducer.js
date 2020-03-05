@@ -13,9 +13,8 @@ export const changeProperty = (id, propertyId, value) => ({type:CHANGE_PROPERTY,
 export const makeItemActive = (id) => ({type: MAKE_ACTIV, id: id});
 export const cancelItemActive = (id) => ({type: CANCEL_ACTIV, id: id});
 
-let initialState = {
+let initialState = [
 
-    data: [
     {
         id: 645,
         activity: false,
@@ -72,8 +71,7 @@ let initialState = {
         activity: false,
         properties:["Andrew","Ivanov","Biatlon","31","3"]
     },
-]
-};
+];
 
 // helpers
 
@@ -95,51 +93,49 @@ export const DataReducer = (state = initialState, action) => {
 
         case SORT: {
 
-            let newData = [
-                ...state.data.sort((prev, next) => {
-                    if (prev.properties[action.id - 1] < next.properties[action.id - 1]) {
+            return [
+                ...state.sort((prev, next) => {
+                    if (prev && next && prev.properties[action.id - 1] < next.properties[action.id - 1]) {
                         return -1
+                    } else {
                     }
-                    if (prev.properties[action.id - 1] < next.properties[action.id - 1]) {
-                        return 1
-                    } else {}
                 })
             ];
-            return{...state, data: newData}
         }
         case DELETE_ITEM: {
 
-            let newData = state.data.map(item => {
+            let newState = state.map(item => {
                 if (item && item.id !== action.id) {
                     return item
                 } else {
                     return null
                 }
             });
-            return {...state, data: newData}
+            return [...newState]
         }
         case DUPLICATE_ITEM: {
 
             let newId = new Date().getTime();
-            let item = state.data.find(item => item.id === action.id);
-            let newData = [...state.data.splice(state.data.indexOf(item), 0,
+            let item = state.find(item => item && item.id === action.id);
+            state.splice(state.indexOf(item), 0,
                 {
                     id: newId,
                     properties: [...item.properties]
                 }
-            )];
-            debugger;
-            return {...state, data: newData}
+            );
+            return [...state]
+
         }
         case CHANGE_PROPERTY: {
 
-            let newData = state.data.map((item) => {
+            state.map((item) => {
                 if (item) {
                     let newItem = {...item};
                     if (item.id === action.id) {
                         newItem = {
                             ...item,
-                            ...item.properties[action.propertyId] = action.newValue
+                            properties: [...item.properties,
+                                item.properties[action.propertyId] = action.newValue],
                         }
                     } else {
                         return null
@@ -149,18 +145,16 @@ export const DataReducer = (state = initialState, action) => {
                     return null
                 }
             });
-            return {...state, data:newData}
+            return[...state]
         }
         case MAKE_ACTIV:{
-            let newData = changeActive(state.data, action.id , true);
-            return{...state, data: newData}
+            return[...changeActive(state, action.id , true)]
         }
         case CANCEL_ACTIV:{
-            let newData = changeActive(state.data, action.id, false);
-            return{...state, data: newData}
-        }
+            return[...changeActive(state, action.id, false)]
+}
         default: {
-            return {...state}
+            return [...state]
         }
     }
 };

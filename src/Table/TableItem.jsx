@@ -6,6 +6,10 @@ import {ContextMenuTrigger} from "react-contextmenu";
 import React from "react";
 import RedactWindow from "./Components/RedactWindow/RedactWindow";
 import Exz from "../exz";
+import classNames from 'classnames'
+import Table from "../App";
+
+
 const Item = (props) => {
 
     console.log(props);
@@ -36,7 +40,10 @@ const Item = (props) => {
                 document.body
             )}
             <ContextMenuTrigger id={props.id + ''} holdToDisplay={1000}>
-                <div className={style.block}>
+                <div
+                    className={ props.activity ? classNames(style.block,style.block__active ) : style.block}
+                    onDoubleClick={() => {!props.activity ? props.makeItemActive(props.id) : props.cancelItemActive(props.id)} }
+                >
                     {Properties}
                 </div>
 
